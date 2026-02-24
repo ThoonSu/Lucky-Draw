@@ -4,6 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lucky Draw</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="icon.jpg" type="image/x-icon" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Lucky Draw</h1>
+      </header>
+
+      <div class="main-layout">
+        <div class="wheel-container">
+          <div class="pointer"></div>
+          <canvas id="wheelCanvas" width="500" height="500"></canvas>
+          <button id="spinBtn">Spin</button>
+        </div>
+
+        <div class="sidebar">
+          <div class="current-winner-card">
+            <h2 id="prizeLevel">Next Up...</h2>
+            <h1 id="winnerName">-</h1>
+          </div>
+
+          <div class="history-card">
+            <div class="history-header">
+              <h3>Winner History</h3>
+            </div>
+            <ul id="historyList"></ul>
+          </div>
+        </div>
+      </div>
+
+      <section class="settings">
+        <h3>Enter Participants</h3>
+        <p>
+          Enter names separated by commas. Winners are automatically removed
+          from the wheel.
+        </p>
+        <textarea id="nameInput">Person A, Person B, Person C</textarea>
+        <button id="updateBtn">Update Wheel</button>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
