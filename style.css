@@ -163,3 +163,19 @@ textarea {
   border-radius: 8px;
   border: 1px solid #30363d;
 }
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.reset-btn {
+  background: #30363d;
+  color: #f85149; /* Reddish tint for danger */
+  border: 1px solid #f85149;
+}
+
+.reset-btn:hover {
+  background: #f85149;
+  color: white;
+}

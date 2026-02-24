@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lucky Draw</title>
-    <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="icon.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <audio id="applauseSound" src="applause.mp3"></audio>
-
+    <audio id="spinSound" src="wheel-spin.mp3" loop></audio>
     <div id="winnerOverlay" class="overlay hidden">
       <div class="overlay-content">
         <h2 id="overlayPrize">1st Prize</h2>
@@ -27,7 +27,7 @@
         <div class="wheel-container">
           <div class="pointer"></div>
           <canvas id="wheelCanvas" width="500" height="500"></canvas>
-          <button id="spinBtn">SPIN TO WIN</button>
+          <button id="spinBtn">Spin</button>
         </div>
 
         <div class="sidebar">
@@ -45,8 +45,10 @@
       <section class="settings">
         <h3>Manage Participants</h3>
         <textarea id="nameInput">Person A, Person B, Person C</textarea>
-        <button id="updateBtn">Update Wheel</button>
-        <button id="resetBtn" class="reset-btn">Reset All</button>
+        <div class="button-group">
+          <button id="updateBtn">Update Wheel</button>
+          <button id="resetBtn" class="reset-btn">Reset All</button>
+        </div>
       </section>
     </div>
 

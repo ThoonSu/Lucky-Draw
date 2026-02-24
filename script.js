@@ -4,6 +4,7 @@ const spinBtn = document.getElementById("spinBtn");
 const nameInput = document.getElementById("nameInput");
 const historyList = document.getElementById("historyList");
 const applause = document.getElementById("applauseSound");
+const spinSound = document.getElementById("spinSound"); // New Variable
 const overlay = document.getElementById("winnerOverlay");
 
 let names = [];
@@ -57,7 +58,11 @@ function spin() {
   isSpinning = true;
   spinBtn.disabled = true;
 
-  const duration = 5000;
+  // START SPIN SOUND
+  spinSound.currentTime = 0;
+  spinSound.play();
+
+  const duration = 5000; // 5 seconds
   const startTime = performance.now();
   const spinAmount = Math.PI * 2 * 10 + Math.random() * Math.PI * 2;
   const startRotation = currentRotation;
@@ -66,10 +71,15 @@ function spin() {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
     const easing = 1 - Math.pow(1 - progress, 3);
+
     currentRotation = startRotation + spinAmount * easing;
     drawWheel();
-    if (progress < 1) requestAnimationFrame(animate);
-    else announceWinner();
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      announceWinner();
+    }
   }
   requestAnimationFrame(animate);
 }
@@ -77,6 +87,10 @@ function spin() {
 function announceWinner() {
   isSpinning = false;
   spinBtn.disabled = false;
+
+  // STOP SPIN SOUND
+  spinSound.pause();
+  spinSound.currentTime = 0;
 
   const arcSize = (2 * Math.PI) / names.length;
   const normalizedRotation =
@@ -87,25 +101,21 @@ function announceWinner() {
   prizeCounter++;
   const label = `${prizeCounter}${getOrdinal(prizeCounter)} Prize`;
 
-  // 1. Play Sound
+  // Play Applause
   applause.currentTime = 0;
   applause.play();
 
-  // 2. Show in Sidebar
+  // Update UI & Overlay
   document.getElementById("winnerName").innerText = winner;
   document.getElementById("prizeLevel").innerText = label;
-
-  // 3. Show Overlay (The "Another Tab" effect)
   document.getElementById("overlayPrize").innerText = label;
   document.getElementById("overlayName").innerText = winner;
   overlay.classList.remove("hidden");
 
-  // 4. Update History
   const li = document.createElement("li");
   li.innerHTML = `<span>${label}</span> <strong>${winner}</strong>`;
   historyList.prepend(li);
 
-  // 5. Remove from wheel
   names.splice(winnerIndex, 1);
   nameInput.value = names.join(", ");
   setTimeout(drawWheel, 1000);
@@ -124,10 +134,12 @@ function getOrdinal(n) {
 
 document.getElementById("updateBtn").addEventListener("click", updateWheel);
 document.getElementById("resetBtn").addEventListener("click", () => {
-  nameInput.value = originalNames;
-  prizeCounter = 0;
-  historyList.innerHTML = "";
-  updateWheel();
+  if (confirm("Are you sure you want to reset everything?")) {
+    nameInput.value = originalNames;
+    prizeCounter = 0;
+    historyList.innerHTML = "";
+    updateWheel();
+  }
 });
 spinBtn.addEventListener("click", spin);
 
